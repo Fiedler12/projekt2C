@@ -15,13 +15,13 @@ struct Card
 {
     char suit;
     char value;
-    struct Card* next;
+    struct Card *next;
 };
 struct Card cards[52];
 
 struct Bottom
 {
-    struct Card* ptr;
+    struct Card *ptr;
 };
 struct Bottom c1;
 
@@ -69,11 +69,20 @@ void mixCards()
 }
 
 void layOut() {
-    c1.ptr = &cards[topCard];
+    struct Card *current;
+    current = &cards[topCard];
+    struct Card *next;
+    c1.ptr = current;
     ++topCard;
-    c1.ptr->next = &cards[topCard];
+    current->next = &cards[topCard];
+    next = current->next;
+    current = next;
+
     for (int i = 0; i < 7; ++i) {
-        cards[topCard].next = &cards[++topCard];
+        current->next = &cards[topCard + 1];
+        next = current->next;
+        current = next;
+        topCard++;
     }
 }
 
@@ -82,6 +91,18 @@ void printBoard() {
 }
 
 void printStack() {
-    printf("C1: %c%c", c1.ptr->suit, c1.ptr->value);
-
-}
+    printf("C1: %c%c ", c1.ptr->suit, c1.ptr->value);
+    struct Card *current;
+    struct Card *next;
+    current = c1.ptr;
+    next = current->next;
+    current = next;
+        while (1) {
+            printf("%c%c ", current->suit, current->value);
+            if (current->next == NULL) {
+                break;
+            }
+            next = current->next;
+            current = next;
+        }
+    }
