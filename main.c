@@ -41,15 +41,17 @@ void fillCards()
 }
 
 void mixCards()
-{
+{   int j, n;
+    struct Card temp;
     for (int i = 0; i < 300; ++i) {
-        int j, n;
-        struct Card temp;
         n = rand() % 51 + 1;
         j = rand() % 51 + 1;
-        cards[n] = temp;
-        cards[j] = cards[n];
-        temp = cards[j];
+        temp.suit = cards[n].suit;
+        temp.value = cards[n].value;
+        cards[n].suit = cards[j].suit;
+        cards[n].value = cards[j].value;
+        cards[j].suit = temp.suit;
+        cards[j].value = temp.value;
     }
 
 }
