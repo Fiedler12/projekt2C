@@ -23,8 +23,7 @@ struct Bottom
 {
     struct Card *ptr;
 };
-struct Bottom c1;
-
+struct Bottom columns[7];
 
 
 int main()
@@ -89,7 +88,7 @@ void layOut() {
 void printBoard() {
     printf("C1\t C2 \t C3 \t C4 \t C5 \t C6 \t C7");
 }
-
+/*
 void printStack() {
     printf("C1: %c%c ", c1.ptr->suit, c1.ptr->value);
     struct Card *current;
@@ -106,3 +105,4 @@ void printStack() {
             current = next;
         }
     }
+*/
