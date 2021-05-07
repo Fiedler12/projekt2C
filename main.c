@@ -44,8 +44,8 @@ void mixCards()
 {   int j, n;
     struct Card temp;
     for (int i = 0; i < 300; ++i) {
-        n = rand() % 51 + 1;
-        j = rand() % 51 + 1;
+        n = rand() % 52;
+        j = rand() % 52;
         temp.suit = cards[n].suit;
         temp.value = cards[n].value;
         cards[n].suit = cards[j].suit;
