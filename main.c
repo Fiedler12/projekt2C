@@ -4,6 +4,12 @@
 
 void fillCards();
 void mixCards();
+void layOut();
+int topCard;
+void printStack();
+void printBoard();
+
+
 
 struct Card
 {
@@ -11,20 +17,26 @@ struct Card
     char value;
     struct Card* next;
 };
-
 struct Card cards[52];
+
+struct Bottom
+{
+    struct Card* ptr;
+};
+struct Bottom c1;
+
+
 
 int main()
 {
     fillCards();
     mixCards();
-    for (int i = 0; i < 52; ++i) {
-        printf("%c",cards[i].suit);
-        printf("%c \n",cards[i].value);
-    }
-
+    topCard = 0;
+    layOut();
+    printStack();
     return 0;
 }
+
 
 void fillCards()
 {
@@ -44,8 +56,8 @@ void mixCards()
 {   int j, n;
     struct Card temp;
     for (int i = 0; i < 300; ++i) {
-        n = rand() % 51 + 1;
-        j = rand() % 51 + 1;
+        n = rand() % 52;
+        j = rand() % 52;
         temp.suit = cards[n].suit;
         temp.value = cards[n].value;
         cards[n].suit = cards[j].suit;
@@ -56,3 +68,20 @@ void mixCards()
 
 }
 
+void layOut() {
+    c1.ptr = &cards[topCard];
+    ++topCard;
+    c1.ptr->next = &cards[topCard];
+    for (int i = 0; i < 7; ++i) {
+        cards[topCard].next = &cards[++topCard];
+    }
+}
+
+void printBoard() {
+    printf("C1\t C2 \t C3 \t C4 \t C5 \t C6 \t C7");
+}
+
+void printStack() {
+    printf("C1: %c%c", c1.ptr->suit, c1.ptr->value);
+
+}
