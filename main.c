@@ -1,8 +1,9 @@
 // Working of arithmetic operators
 #include <stdio.h>
-#include <expat.h>
+#include <accctrl.h>
 
 void fillCards();
+void mixCards();
 
 struct Card
 {
@@ -16,6 +17,11 @@ struct Card cards[52];
 int main()
 {
     fillCards();
+    mixCards();
+    for (int i = 0; i < 52; ++i) {
+        printf("%c",cards[i].suit);
+        printf("%c \n",cards[i].value);
+    }
 
     return 0;
 }
@@ -23,12 +29,12 @@ int main()
 void fillCards()
 {
     int t = 0;
-    char suits[5] = {'H', 'C', 'D', 'S','\0'};
-    char value[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
+    char suits[4] = {'H', 'C', 'D', 'S'};
+    char values[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 13; ++j) {
             cards[t].suit = suits[i];
-            cards[t].value = value[j];
+            cards[t].value = values[j];
             ++t;
         }
     }
@@ -36,11 +42,15 @@ void fillCards()
 
 void mixCards()
 {
-    int j, n;
-    n = rand() % 52 + 1;
-    j = rand() % 52 + 1;
-
-
+    for (int i = 0; i < 300; ++i) {
+        int j, n;
+        struct Card temp;
+        n = rand() % 51 + 1;
+        j = rand() % 51 + 1;
+        cards[n] = temp;
+        cards[j] = cards[n];
+        temp = cards[j];
+    }
 
 }
 
