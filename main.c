@@ -1,5 +1,6 @@
 // Working of arithmetic operators
 #include <stdio.h>
+#include <expat.h>
 
 void fillCards();
 
@@ -15,10 +16,7 @@ struct Card cards[52];
 int main()
 {
     fillCards();
-    for (int i = 0; i < 52; ++i) {
-        printf("%c", cards[i].suit);
-        printf("%c \n", cards[i].value);
-    }
+
     return 0;
 }
 
@@ -34,7 +32,15 @@ void fillCards()
             ++t;
         }
     }
-
 }
 
+void mixCards()
+{
+    int j, n;
+    n = rand() % 52 + 1;
+    j = rand() % 52 + 1;
+
+
+
+}
 
