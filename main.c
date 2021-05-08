@@ -27,8 +27,15 @@ struct Bottom
 {
     struct Card *ptr;
 };
+
 struct Bottom columns[7];
 
+struct FinishedPile
+{
+    struct Card *ptr;
+};
+
+struct FinishedPile donePile[4];
 
 int main()
 {
@@ -170,15 +177,15 @@ void printBoard() {
     printLine(2);
     printf("\n");
     printLine(3);
-    printf("\t [] \t F1 \n");
+    printf("\t [] \t F2 \n");
     printLine(4);
     printf("\n");
     printLine(5);
-    printf("\t [] \t F1 \n");
+    printf("\t [] \t F3 \n");
     printLine(6);
     printf("\n");
     printLine(7);
-    printf("\t [] \t F1 \n");
+    printf("\t [] \t F4 \n");
     printLine(8);
     printf("\n");
     printLine(9);
