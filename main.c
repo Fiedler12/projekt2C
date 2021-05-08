@@ -4,7 +4,7 @@
 
 void fillCards();
 void mixCards();
-void layOut(int deckSize, int index);
+void layOut(int deckSize, int index, int turnedAmount);
 void printStack();
 void printBoard();
 void printLine(int lineIndex);
@@ -12,8 +12,11 @@ struct Card *getListIndex(int lineIndex, int arrayIndex);
 
 int topCard;
 
+enum boolean{F, T};
+
 struct Card
 {
+    boolean isShown;
     char suit;
     char value;
     struct Card *next;
@@ -32,13 +35,13 @@ int main()
     fillCards();
     mixCards();
     topCard = 0;
-    layOut(1,0);
-    layOut(6, 1);
-    layOut(7,2);
-    layOut(8,3);
-    layOut(9,4);
-    layOut(10,5);
-    layOut(11,6);
+    layOut(1,0,0);
+    layOut(6, 1,1);
+    layOut(7,2,2);
+    layOut(8,3,3);
+    layOut(9,4,4);
+    layOut(10,5,5);
+    layOut(11,6,6);
     printBoard();
     /*printf("C1: ");
     struct Card *current = columns[1].ptr;
@@ -53,6 +56,7 @@ int main()
         */
     return 0;
 }
+
 
 
 void fillCards()
@@ -85,10 +89,18 @@ void mixCards()
 
 }
 //WORKS and poops and ze sprms
-void layOut(int deckSize, int index) {
+void layOut(int deckSize, int index, int turnedAmount) {
+    int t = 0;
     struct Card *current;
     current = &cards[topCard];
     struct Card *next;
+    if (t < turnedAmount) {
+        current->isShown = F;
+        ++t;
+    }
+    else {
+        current->isShown = T;
+    }
     columns[index].ptr = current;
     for (int i = 0; i < deckSize; ++i) {
         if (i == deckSize -1) {
@@ -98,6 +110,13 @@ void layOut(int deckSize, int index) {
         current->next = &cards[topCard + 1];
         next = current->next;
         current = next;
+        if (t < turnedAmount) {
+            current->isShown = F;
+            ++t;
+        }
+        else {
+            current->isShown = T;
+        }
         ++topCard;
     }
 }
@@ -109,7 +128,12 @@ void printLine(int lineIndex) {
             printf("\t");
         }
         else {
-            printf("%c%c\t", current->value, current->suit);
+            if(current->isShown == T) {
+                printf("%c%c\t", current->value, current->suit);
+            }
+            else {
+                printf("[]\t");
+            }
         }
     }
 }
