@@ -9,10 +9,11 @@ void printStack();
 void printBoard();
 void printLine(int lineIndex);
 struct Card *getListIndex(int lineIndex, int arrayIndex);
+void move(struct Card *moveCard, struct Card *moveTo);
 
 int topCard;
 
-enum boolean{F, T};
+enum boolean{S, F};
 
 struct Card
 {
@@ -20,6 +21,7 @@ struct Card
     char suit;
     char value;
     struct Card *next;
+    struct Card *prev;
 };
 struct Card cards[52];
 
@@ -50,17 +52,25 @@ int main()
     layOut(10,5,5);
     layOut(11,6,6);
     printBoard();
-    /*printf("C1: ");
-    struct Card *current = columns[1].ptr;
-    struct Card *next = current->next;
-    while (1) {
-        printf("%c%c ", current->suit, current->value);
-        current = next;
-        next = current->next;
-        if (next == NULL) {
-            break;
-        }
-        */
+    struct Card *moveCard;
+    struct Card *moveTo;
+    moveCard = columns[3].ptr;
+    moveTo = columns[4].ptr;
+    while (moveCard->value != 'A' || moveCard->suit != 'S'){
+        moveCard = moveCard->next;
+    }
+    while (moveTo->value != '2' || moveTo->suit != 'H') {
+        moveTo = moveTo->next;
+    }
+    move(moveCard, moveTo);
+    printBoard();
+    /*printf("C2: ");
+    struct Card *current;
+    current = &cards[36];
+    while(current->prev != NULL) {
+        printf("%c%c ", current->prev->suit, current->prev->value);
+        current = current->prev;
+    } */
     return 0;
 }
 
@@ -98,6 +108,7 @@ void mixCards()
 //WORKS and poops and ze sprms
 void layOut(int deckSize, int index, int turnedAmount) {
     int t = 0;
+    struct Card *prev;
     struct Card *current;
     current = &cards[topCard];
     struct Card *next;
@@ -106,26 +117,32 @@ void layOut(int deckSize, int index, int turnedAmount) {
         ++t;
     }
     else {
-        current->isShown = T;
+        current->isShown = S;
     }
     columns[index].ptr = current;
     for (int i = 0; i < deckSize; ++i) {
         if (i == deckSize -1) {
             ++topCard;
+            current->prev = prev;
             return;
+        }
+        if (i != 0) {
+            current->prev = &cards[topCard - 1];
         }
         current->next = &cards[topCard + 1];
         next = current->next;
+        prev = current;
         current = next;
         if (t < turnedAmount) {
             current->isShown = F;
             ++t;
         }
         else {
-            current->isShown = T;
+            current->isShown = S;
         }
         ++topCard;
     }
+    current->prev = prev;
 }
 void printLine(int lineIndex) {
     struct Card *current;
@@ -135,7 +152,7 @@ void printLine(int lineIndex) {
             printf("\t");
         }
         else {
-            if(current->isShown == T) {
+            if(current->isShown == S) {
                 printf("%c%c\t", current->value, current->suit);
             }
             else {
@@ -219,3 +236,160 @@ void printStack() {
             current = next;
         }
     }
+
+    void move(struct Card *moveCard, struct Card *moveTo) {
+        if (moveCard->isShown == F || moveTo->next != NULL || moveCard->suit == moveTo->suit) {
+            printf("Move impossible");
+            return;
+        } else { switch (moveCard->value) {
+            case 'A':
+                if (moveTo->value == '2') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                break;
+            case '2':
+                if (moveTo->value == '3') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+
+                }
+                else {
+                    printf("Move impossible");
+                }
+                break;
+            case '3':
+                if (moveTo->value == '4') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+
+                }
+                else {
+                    printf("Move impossible");
+                }
+                break;
+            case '4':
+                if (moveTo->value == '5') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case '5':
+                if (moveTo->value == '6') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case '6':
+                if (moveTo->value == '7') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case '7':
+                if (moveTo->value == '8') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case '8':
+                if (moveTo->value == '9') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case '9':
+                if (moveTo->value == 'T') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case 'T':
+                if (moveTo->value == 'J') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case 'J':
+                if (moveTo->value == 'Q') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+            case 'Q':
+                if (moveTo->value == 'K') {
+                    struct Card *prev;
+                    prev = moveCard->prev;
+                    prev->next = NULL;
+                    moveCard->prev = &moveTo;
+                    moveTo->next = moveCard;
+                }
+                else {
+                    printf("Move impossible");
+                }
+                    break;
+        }
+    }
+}
