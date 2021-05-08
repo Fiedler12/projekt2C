@@ -32,7 +32,13 @@ int main()
     fillCards();
     mixCards();
     topCard = 0;
-    layOut(7,1);
+    layOut(4,0);
+    layOut(6, 1);
+    layOut(6,2);
+    layOut(5,3);
+    layOut(5,4);
+    layOut(3,5);
+    layOut(8,6);
     printBoard();
     /*printf("C1: ");
     struct Card *current = columns[1].ptr;
@@ -84,12 +90,11 @@ void layOut(int deckSize, int index) {
     current = &cards[topCard];
     struct Card *next;
     columns[index].ptr = current;
-
     for (int i = 0; i < deckSize-1; ++i) {
         current->next = &cards[topCard + 1];
         next = current->next;
         current = next;
-        topCard++;
+        ++topCard;
     }
 }
 void printLine(int lineIndex) {
@@ -101,16 +106,20 @@ void printLine(int lineIndex) {
         }
         printf("%c%c\t", current->value, current->suit);
     }
+    printf("\n");
 }
 
 struct Card *getListIndex(int lineIndex, int arrayIndex) {
     struct Card *result;
     result = columns[arrayIndex].ptr;
-    struct Card *next;
-    next = result->next;
+    if (result == NULL) {
+        return result;
+    }
     if (lineIndex == 1) {
         return result;
     }
+    struct Card *next;
+    next = result->next;
     for (int i = 0; i < lineIndex-1; ++i) {
         result = next;
         next = result->next;
@@ -125,6 +134,12 @@ struct Card *getListIndex(int lineIndex, int arrayIndex) {
 void printBoard() {
     printf("C1\t C2 \t C3 \t C4 \t C5 \t C6 \t C7 \n\n");
     printLine(1);
+    printLine(2);
+    printLine(3);
+    printLine(4);
+    printLine(5);
+    printLine(6);
+
 }
 
 void printStack() {
