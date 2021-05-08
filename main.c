@@ -34,17 +34,17 @@ int main()
     topCard = 0;
     layOut(7,1);
     printBoard();
-    /*printf("C1");
+    /*printf("C1: ");
     struct Card *current = columns[1].ptr;
     struct Card *next = current->next;
     while (1) {
-        printf("%c%c", current->suit, current->value);
+        printf("%c%c ", current->suit, current->value);
         current = next;
         next = current->next;
         if (next == NULL) {
             break;
         }
-    } */
+        */
     return 0;
 }
 
