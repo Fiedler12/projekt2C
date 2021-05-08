@@ -32,13 +32,13 @@ int main()
     fillCards();
     mixCards();
     topCard = 0;
-    layOut(4,0);
+    layOut(1,0);
     layOut(6, 1);
-    layOut(6,2);
-    layOut(5,3);
-    layOut(5,4);
-    layOut(3,5);
-    layOut(8,6);
+    layOut(7,2);
+    layOut(8,3);
+    layOut(9,4);
+    layOut(10,5);
+    layOut(11,6);
     printBoard();
     /*printf("C1: ");
     struct Card *current = columns[1].ptr;
@@ -90,7 +90,11 @@ void layOut(int deckSize, int index) {
     current = &cards[topCard];
     struct Card *next;
     columns[index].ptr = current;
-    for (int i = 0; i < deckSize-1; ++i) {
+    for (int i = 0; i < deckSize; ++i) {
+        if (i == deckSize -1) {
+            ++topCard;
+            return;
+        }
         current->next = &cards[topCard + 1];
         next = current->next;
         current = next;
@@ -104,9 +108,10 @@ void printLine(int lineIndex) {
         if (current == NULL){
             printf("\t");
         }
-        printf("%c%c\t", current->value, current->suit);
+        else {
+            printf("%c%c\t", current->value, current->suit);
+        }
     }
-    printf("\n");
 }
 
 struct Card *getListIndex(int lineIndex, int arrayIndex) {
@@ -120,11 +125,14 @@ struct Card *getListIndex(int lineIndex, int arrayIndex) {
     }
     struct Card *next;
     next = result->next;
-    for (int i = 0; i < lineIndex-1; ++i) {
+    if (next == NULL) {
+        return next;
+    }
+    for (int i = 0; i < lineIndex - 1; ++i) {
         result = next;
         next = result->next;
-        if (next == NULL) {
-            break;
+        if (next == NULL && i < lineIndex - 2) {
+            return NULL;
         }
     }
     return result;
@@ -132,14 +140,37 @@ struct Card *getListIndex(int lineIndex, int arrayIndex) {
 
 
 void printBoard() {
-    printf("C1\t C2 \t C3 \t C4 \t C5 \t C6 \t C7 \n\n");
+    printf("C1\tC2 \tC3 \tC4 \tC5 \tC6 \tC7 \n\n");
     printLine(1);
+    printf("\t [] \t F1 \n");
     printLine(2);
+    printf("\n");
     printLine(3);
+    printf("\t [] \t F1 \n");
     printLine(4);
+    printf("\n");
     printLine(5);
+    printf("\t [] \t F1 \n");
     printLine(6);
-
+    printf("\n");
+    printLine(7);
+    printf("\t [] \t F1 \n");
+    printLine(8);
+    printf("\n");
+    printLine(9);
+    printf("\n");
+    printLine(10);
+    printf("\n");
+    printLine(11);
+    printf("\n");
+    printLine(12);
+    printf("\n");
+    printLine(13);
+    printf("\n");
+    printLine(14);
+    printf("\n");
+    printLine(15);
+    printf("\n");
 }
 
 void printStack() {
