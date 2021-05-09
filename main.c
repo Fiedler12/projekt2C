@@ -46,18 +46,10 @@ struct FinishedPile donePile[4];
 
 int main()
 {
-    fillCards();
-    mixCards();
-    topCard = 0;
-    layOut(1,0,0);
-    layOut(6, 1,1);
-    layOut(7,2,2);
-    layOut(8,3,3);
-    layOut(9,4,4);
-    layOut(10,5,5);
-    layOut(11,6,6);
-    printBoard();
-    printBoard();
+    while (1) {
+        printBoard();
+    }
+
     /*struct Card *moveCard;
     struct Card *moveTo;
     moveCard = columns[3].ptr;
@@ -227,7 +219,7 @@ void printBoard() {
     printf("\n");
     printLine(15);
     printf("\n");
-    printf("LAST Command: %s\nMessage: \nINPUT >", lastCommand);
+    printf("LAST Command: %s\nMessage: %s\nINPUT >", lastCommand,status);
     takeCommand();
 }
 
@@ -409,32 +401,52 @@ int takeCommand() {
     strupr(getCommand);
     strcpy(lastCommand, getCommand);
     if (getCommand[0] == 'L' && getCommand[1] == 'D') {
-
-        return 1;
+        status[0] = 'O';
+        status[1] = 'K';
+        fillCards();
+        topCard = 0;
     }
     else if (getCommand[0] == 'S' && getCommand[1] == 'W') {
-
-        return 1;
+        status[0] = 'O';
+        status[1] = 'K';
     }
     else if (getCommand[0] == 'S' && getCommand[1] == 'I') {
-
+        status[0] = 'O';
+        status[1] = 'K';
     }
     else if (getCommand[0] == 'S' && getCommand[1] == 'R') {
-
+        status[0] = 'O';
+        status[1] = 'K';
+        mixCards();
     }
     else if (getCommand[0] == 'S' && getCommand[1] == 'D') {
-
+        status[0] = 'O';
+        status[1] = 'K';
     }
     else if (getCommand[0] == 'Q' && getCommand[1] == 'Q') {
-
+        status[0] = 'O';
+        status[1] = 'K';
+        exit(0);
     }
     else if (getCommand[0] == 'P' && strlen(getCommand) == 1) {
-
+        status[0] = 'O';
+        status[1] = 'K';
+        layOut(1,0,0);
+        layOut(6, 1,1);
+        layOut(7,2,2);
+        layOut(8,3,3);
+        layOut(9,4,4);
+        layOut(10,5,5);
+        layOut(11,6,6);
     }
     else if (getCommand[0] == 'Q' && strlen(getCommand) == 1) {
-
+        status[0] = 'O';
+        status[1] = 'K';
     }
     else {
+        status[0] = 'E';
+        status[1] = 'R';
+
         return 0;
     }
 }
