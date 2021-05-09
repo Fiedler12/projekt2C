@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <accctrl.h>
 #include <string.h>
+#include <stdlib.h>
 
 void fillCards();
 void mixCards();
@@ -92,7 +93,23 @@ void fillCards()
             cards[t].value = values[j];
             ++t;
         }
-    }
+    } /*
+        FILE *fp;
+        fp = fopen ("C:\\Users\\olyng\\Desktop\\CardDeck.txt", "r");        // Open the file with 'read' option.    ''
+        if(fp==NULL){ exit(-1);}
+        char line[500];
+        int t = 0;
+        while (feof(fp)) {
+            fscanf(fp, "%s", line);
+            ++t;
+        }
+        line[t] = "\0";
+        fclose(fp);
+        printf("%s", line);
+//while(head !=NULL){
+        //   pop();
+//}
+ */
 }
 
 void mixCards()
