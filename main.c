@@ -1,6 +1,7 @@
 // Working of arithmetic operators
 #include <stdio.h>
 #include <accctrl.h>
+#include <string.h>
 
 void fillCards();
 void mixCards();
@@ -10,8 +11,12 @@ void printBoard();
 void printLine(int lineIndex);
 struct Card *getListIndex(int lineIndex, int arrayIndex);
 void move(struct Card *moveCard, struct Card *moveTo);
+int takeCommand();
 
 int topCard;
+char lastCommand[9];
+char getCommand[9];
+char status[2];
 
 enum boolean{S, F};
 
@@ -52,7 +57,8 @@ int main()
     layOut(10,5,5);
     layOut(11,6,6);
     printBoard();
-    struct Card *moveCard;
+    printBoard();
+    /*struct Card *moveCard;
     struct Card *moveTo;
     moveCard = columns[3].ptr;
     moveTo = columns[4].ptr;
@@ -64,6 +70,8 @@ int main()
     }
     move(moveCard, moveTo);
     printBoard();
+     */
+
     /*printf("C2: ");
     struct Card *current;
     current = &cards[36];
@@ -219,6 +227,8 @@ void printBoard() {
     printf("\n");
     printLine(15);
     printf("\n");
+    printf("LAST Command: %s\nMessage: \nINPUT >", lastCommand);
+    takeCommand();
 }
 
 void printStack() {
@@ -391,5 +401,40 @@ void printStack() {
                 }
                     break;
         }
+    }
+}
+
+int takeCommand() {
+    gets(getCommand);
+    strupr(getCommand);
+    strcpy(lastCommand, getCommand);
+    if (getCommand[0] == 'L' && getCommand[1] == 'D') {
+
+        return 1;
+    }
+    else if (getCommand[0] == 'S' && getCommand[1] == 'W') {
+
+        return 1;
+    }
+    else if (getCommand[0] == 'S' && getCommand[1] == 'I') {
+
+    }
+    else if (getCommand[0] == 'S' && getCommand[1] == 'R') {
+
+    }
+    else if (getCommand[0] == 'S' && getCommand[1] == 'D') {
+
+    }
+    else if (getCommand[0] == 'Q' && getCommand[1] == 'Q') {
+
+    }
+    else if (getCommand[0] == 'P' && strlen(getCommand) == 1) {
+
+    }
+    else if (getCommand[0] == 'Q' && strlen(getCommand) == 1) {
+
+    }
+    else {
+
     }
 }
