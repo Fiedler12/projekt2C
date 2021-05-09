@@ -266,7 +266,9 @@ void printStack() {
                 if (moveTo->value == '2') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -279,7 +281,9 @@ void printStack() {
                 if (moveTo->value == '3') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
 
@@ -293,7 +297,9 @@ void printStack() {
                 if (moveTo->value == '4') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
 
@@ -307,7 +313,9 @@ void printStack() {
                 if (moveTo->value == '5') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
 
@@ -321,7 +329,9 @@ void printStack() {
                 if (moveTo->value == '6') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
 
@@ -335,7 +345,9 @@ void printStack() {
                 if (moveTo->value == '7') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -348,7 +360,9 @@ void printStack() {
                 if (moveTo->value == '8') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -361,7 +375,9 @@ void printStack() {
                 if (moveTo->value == '9') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -374,7 +390,9 @@ void printStack() {
                 if (moveTo->value == 'T') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -387,7 +405,9 @@ void printStack() {
                 if (moveTo->value == 'J') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -400,7 +420,9 @@ void printStack() {
                 if (moveTo->value == 'Q') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
@@ -413,7 +435,9 @@ void printStack() {
                 if (moveTo->value == 'K') {
                     struct Card *prev;
                     prev = moveCard->prev;
-                    prev->next = NULL;
+                    if (prev != NULL) {
+                        prev->next = NULL;
+                    }
                     moveCard->prev = &moveTo;
                     moveTo->next = moveCard;
                 }
