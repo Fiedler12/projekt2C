@@ -11,7 +11,7 @@ void printBoard();
 void printLine(int lineIndex);
 struct Card *getListIndex(int lineIndex, int arrayIndex);
 void move(struct Card *moveCard, struct Card *moveTo);
-int takeCommand();
+void takeCommand();
 
 int topCard;
 char lastCommand[9];
@@ -396,7 +396,7 @@ void printStack() {
     }
 }
 
-int takeCommand() {
+void takeCommand() {
     gets(getCommand);
     strupr(getCommand);
     strcpy(lastCommand, getCommand);
@@ -405,48 +405,100 @@ int takeCommand() {
         status[1] = 'K';
         fillCards();
         topCard = 0;
-    }
-    else if (getCommand[0] == 'S' && getCommand[1] == 'W') {
+    } else if (getCommand[0] == 'S' && getCommand[1] == 'W') {
         status[0] = 'O';
         status[1] = 'K';
-    }
-    else if (getCommand[0] == 'S' && getCommand[1] == 'I') {
+    } else if (getCommand[0] == 'S' && getCommand[1] == 'I') {
         status[0] = 'O';
         status[1] = 'K';
-    }
-    else if (getCommand[0] == 'S' && getCommand[1] == 'R') {
+    } else if (getCommand[0] == 'S' && getCommand[1] == 'R') {
         status[0] = 'O';
         status[1] = 'K';
         mixCards();
-    }
-    else if (getCommand[0] == 'S' && getCommand[1] == 'D') {
+    } else if (getCommand[0] == 'S' && getCommand[1] == 'D') {
         status[0] = 'O';
         status[1] = 'K';
-    }
-    else if (getCommand[0] == 'Q' && getCommand[1] == 'Q') {
+    } else if (getCommand[0] == 'Q' && getCommand[1] == 'Q') {
         status[0] = 'O';
         status[1] = 'K';
         exit(0);
-    }
-    else if (getCommand[0] == 'P' && strlen(getCommand) == 1) {
+    } else if (getCommand[0] == 'P' && strlen(getCommand) == 1) {
         status[0] = 'O';
         status[1] = 'K';
-        layOut(1,0,0);
-        layOut(6, 1,1);
-        layOut(7,2,2);
-        layOut(8,3,3);
-        layOut(9,4,4);
-        layOut(10,5,5);
-        layOut(11,6,6);
-    }
-    else if (getCommand[0] == 'Q' && strlen(getCommand) == 1) {
+        layOut(1, 0, 0);
+        layOut(6, 1, 1);
+        layOut(7, 2, 2);
+        layOut(8, 3, 3);
+        layOut(9, 4, 4);
+        layOut(10, 5, 5);
+        layOut(11, 6, 6);
+    } else if (getCommand[0] == 'Q' && strlen(getCommand) == 1) {
         status[0] = 'O';
         status[1] = 'K';
-    }
-    else {
+    } else if (getCommand[0] == 'C' && strlen(getCommand) == 9) {
+        struct Bottom *fromColumn;
+        struct Bottom *toColumn;
+        struct Card *moveCard;
+        struct Card *moveTo;
+        int columnNumber = 0;
+        if (isdigit(getCommand[1])) {
+            columnNumber = strtol(getCommand[1], NULL, 10);
+        } else {
+            status[0] = 'E';
+            status[1] = 'R';
+            return;
+        }
+        columnNumber = getCommand[1] - '0';
+        if (columnNumber < 1 || columnNumber > 7) {
+            status[0] = 'E';
+            status[1] = '2';
+            return;
+        } else {
+            fromColumn = &columns[columnNumber - 1];
+            if (getCommand[2] != ':') {
+                status[0] = 'E';
+                status[1] = '3';
+                return;
+            } else {
+                moveCard = fromColumn->ptr;
+                while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
+                    moveCard = moveCard->next;
+                }
+            }
+        }
+        if (getCommand[5] != '-') {
+            status[0] = 'E';
+            status[1] = '4';
+            return;
+        } else if (getCommand[6] != '>') {
+            status[0] = 'E';
+            status[1] = '5';
+        } else {
+            int toColumnNumber;
+            if (isdigit(getCommand[1])) {
+                toColumnNumber = strtol(getCommand[1], NULL, 10);
+            } else {
+                status[0] = 'E';
+                status[1] = 'R';
+                return;
+            }
+            if (toColumnNumber < 1 || toColumnNumber > 7){
+                toColumn = &columns[toColumnNumber - 1];
+                moveTo = toColumn->ptr;
+                while (moveTo->next != NULL) {
+                    moveTo = moveTo->next;
+                }
+                move(moveCard, moveTo);
+                return;
+            } else {
+                status[0] = 'E';
+                status[1] = 'R';
+                return;
+            }
+        }
+    } else {
         status[0] = 'E';
         status[1] = 'R';
-
-        return 0;
+        return;
     }
 }
