@@ -435,6 +435,6 @@ int takeCommand() {
 
     }
     else {
-
+        return 0;
     }
 }
