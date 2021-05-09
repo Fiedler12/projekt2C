@@ -12,6 +12,9 @@ void printLine(int lineIndex);
 struct Card *getListIndex(int lineIndex, int arrayIndex);
 void move(struct Card *moveCard, struct Card *moveTo);
 void takeCommand();
+void moveCommand();
+void moveToF();
+void printFoundation(int index);
 
 int topCard;
 char lastCommand[9];
@@ -40,6 +43,7 @@ struct Bottom columns[7];
 struct FinishedPile
 {
     struct Card *ptr;
+    char suit;
 };
 
 struct FinishedPile donePile[4];
@@ -82,6 +86,7 @@ void fillCards()
     char suits[4] = {'H', 'C', 'D', 'S'};
     char values[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
     for (int i = 0; i < 4; ++i) {
+        donePile[i].suit = suits[i];
         for (int j = 0; j < 13; ++j) {
             cards[t].suit = suits[i];
             cards[t].value = values[j];
@@ -155,6 +160,10 @@ void printLine(int lineIndex) {
             if(current->isShown == S) {
                 printf("%c%c\t", current->value, current->suit);
             }
+            else if (current->isShown == F && current->next == NULL) {
+                current->isShown = 'S';
+                printf("%c%c\t", current->value, current->suit);
+            }
             else {
                 printf("[]\t");
             }
@@ -190,19 +199,27 @@ struct Card *getListIndex(int lineIndex, int arrayIndex) {
 void printBoard() {
     printf("C1\tC2 \tC3 \tC4 \tC5 \tC6 \tC7 \n\n");
     printLine(1);
-    printf("\t [] \t F1 \n");
+    printFoundation(0);
+    printf("F1 (Hearts)");
+    printf("\n");
     printLine(2);
     printf("\n");
     printLine(3);
-    printf("\t [] \t F2 \n");
+    printFoundation(2);
+    printf("F2 (Clubs)");
+    printf("\n");
     printLine(4);
     printf("\n");
     printLine(5);
-    printf("\t [] \t F3 \n");
+    printFoundation(3);
+    printf("F3 (Diamonds)");
+    printf("\n");
     printLine(6);
     printf("\n");
     printLine(7);
-    printf("\t [] \t F4 \n");
+    printFoundation(3);
+    printf("F4 (Spades)");
+    printf("\n");
     printLine(8);
     printf("\n");
     printLine(9);
@@ -241,7 +258,8 @@ void printStack() {
 
     void move(struct Card *moveCard, struct Card *moveTo) {
         if (moveCard->isShown == F || moveTo->next != NULL || moveCard->suit == moveTo->suit) {
-            printf("Move impossible");
+            status[0] = 'E';
+            status[1] = 'R';
             return;
         } else { switch (moveCard->value) {
             case 'A':
@@ -253,7 +271,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                 break;
             case '2':
@@ -266,7 +285,8 @@ void printStack() {
 
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                 break;
             case '3':
@@ -279,7 +299,8 @@ void printStack() {
 
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                 break;
             case '4':
@@ -292,7 +313,8 @@ void printStack() {
 
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case '5':
@@ -305,7 +327,8 @@ void printStack() {
 
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case '6':
@@ -317,7 +340,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case '7':
@@ -329,7 +353,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case '8':
@@ -341,7 +366,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case '9':
@@ -353,7 +379,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case 'T':
@@ -365,7 +392,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case 'J':
@@ -377,7 +405,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
             case 'Q':
@@ -389,7 +418,8 @@ void printStack() {
                     moveTo->next = moveCard;
                 }
                 else {
-                    printf("Move impossible");
+                    status[0] = 'E';
+                    status[1] = 'R';
                 }
                     break;
         }
@@ -435,70 +465,114 @@ void takeCommand() {
     } else if (getCommand[0] == 'Q' && strlen(getCommand) == 1) {
         status[0] = 'O';
         status[1] = 'K';
-    } else if (getCommand[0] == 'C' && strlen(getCommand) == 9) {
+    } else if (strlen(getCommand) == 9 && getCommand[0] == 'C' && getCommand[7] == 'C') {
+        moveCommand();
+    } else if (strlen(getCommand) == 9 && getCommand[7] == 'F' && getCommand[0] == 'C') {
+        moveToF();
+    }
+    else {
+        status[0] = 'E';
+        status[1] = 'R';
+        return;
+    }
+}
+
+void moveCommand() {
+    if (getCommand[2] != ':' || getCommand[5] != '-' || getCommand[6] != '>') {
+        status[0] = 'E';
+        status[1] = 'R';
+        return;
+    } else {
         struct Bottom *fromColumn;
         struct Bottom *toColumn;
         struct Card *moveCard;
         struct Card *moveTo;
-        int columnNumber = 0;
-        if (isdigit(getCommand[1])) {
-            columnNumber = strtol(getCommand[1], NULL, 10);
-        } else {
-            status[0] = 'E';
-            status[1] = 'R';
-            return;
-        }
-        columnNumber = getCommand[1] - '0';
-        if (columnNumber < 1 || columnNumber > 7) {
-            status[0] = 'E';
-            status[1] = '2';
-            return;
-        } else {
-            fromColumn = &columns[columnNumber - 1];
-            if (getCommand[2] != ':') {
+        switch (getCommand[1]) {
+            case '1':
+                fromColumn = &columns[0];
+                break;
+            case '2':
+                fromColumn = &columns[1];
+                break;
+            case '3':
+                fromColumn = &columns[2];
+                break;
+            case '4':
+                fromColumn = &columns[3];
+                break;
+            case '5':
+                fromColumn = &columns[4];
+                break;
+            case '6':
+                fromColumn = &columns[5];
+                break;
+            case '7':
+                fromColumn = &columns[6];
+                break;
+            default:
                 status[0] = 'E';
-                status[1] = '3';
+                status[1] = 'R';
                 return;
-            } else {
-                moveCard = fromColumn->ptr;
-                while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
-                    moveCard = moveCard->next;
-                }
-            }
         }
-        if (getCommand[5] != '-') {
-            status[0] = 'E';
-            status[1] = '4';
-            return;
-        } else if (getCommand[6] != '>') {
-            status[0] = 'E';
-            status[1] = '5';
-        } else {
-            int toColumnNumber;
-            if (isdigit(getCommand[1])) {
-                toColumnNumber = strtol(getCommand[1], NULL, 10);
-            } else {
+        switch (getCommand[8]) {
+            case '1':
+                toColumn = &columns[0];
+                break;
+            case '2':
+                toColumn = &columns[1];
+                break;
+            case '3':
+                toColumn = &columns[2];
+                break;
+            case '4':
+                toColumn = &columns[3];
+                break;
+            case '5':
+                toColumn = &columns[4];
+                break;
+            case '6':
+                toColumn = &columns[5];
+                break;
+            case '7':
+                toColumn = &columns[6];
+                break;
+            default:
+                status[0] = 'E';
+                status[1] = 'R';
+                return;
+        }
+        moveCard = fromColumn->ptr;
+        while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
+            moveCard = moveCard->next;
+            if (moveCard == NULL) {
                 status[0] = 'E';
                 status[1] = 'R';
                 return;
             }
-            if (toColumnNumber < 1 || toColumnNumber > 7){
-                toColumn = &columns[toColumnNumber - 1];
-                moveTo = toColumn->ptr;
-                while (moveTo->next != NULL) {
-                    moveTo = moveTo->next;
-                }
-                move(moveCard, moveTo);
-                return;
-            } else {
-                status[0] = 'E';
-                status[1] = 'R';
-                return;
-            }
         }
-    } else {
-        status[0] = 'E';
-        status[1] = 'R';
+        moveTo = toColumn->ptr;
+        while (moveTo->next != NULL) {
+            moveTo = moveTo->next;
+        }
+        move(moveCard, moveTo);
         return;
+    }
+}
+
+void moveToF() {
+
+}
+
+void printFoundation(int index) {
+    if (donePile[index].ptr == NULL) {
+        printf("[] ");
+    }
+    else {
+        struct Card *current;
+        current = donePile->ptr;
+        while (current->next != NULL) {
+            current = current->next; 
+        }
+        printf("%c%c", current->value, current->suit); 
     }
 }
