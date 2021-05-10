@@ -14,8 +14,9 @@ struct Card *getListIndex(int lineIndex, int arrayIndex);
 void move(struct Card *moveCard, struct Card *moveTo);
 void takeCommand();
 void moveCommand();
-void moveToF();
 void printFoundation(int index);
+
+
 
 int topCard;
 char lastCommand[9];
@@ -49,67 +50,21 @@ struct FinishedPile
 
 struct FinishedPile donePile[4];
 
+void moveToF();
+
+void confirmToF(struct Card *moveCard, struct FinishedPile *toPile);
+
 int main()
 {
     while (1) {
         printBoard();
     }
-
-    /*struct Card *moveCard;
-    struct Card *moveTo;
-    moveCard = columns[3].ptr;
-    moveTo = columns[4].ptr;
-    while (moveCard->value != 'A' || moveCard->suit != 'S'){
-        moveCard = moveCard->next;
-    }
-    while (moveTo->value != '2' || moveTo->suit != 'H') {
-        moveTo = moveTo->next;
-    }
-    move(moveCard, moveTo);
-    printBoard();
-     */
-
-    /*printf("C2: ");
-    struct Card *current;
-    current = &cards[36];
-    while(current->prev != NULL) {
-        printf("%c%c ", current->prev->suit, current->prev->value);
-        current = current->prev;
-    } */
-    return 0;
 }
 
 
 
 void fillCards()
 {
-    /*int t = 0;
-    char suits[4] = {'H', 'C', 'D', 'S'};
-    char values[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
-    for (int i = 0; i < 4; ++i) {
-        donePile[i].suit = suits[i];
-        for (int j = 0; j < 13; ++j) {
-            cards[t].suit = suits[i];
-            cards[t].value = values[j];
-            ++t;
-        }
-    } /*
-        FILE *fp;
-        fp = fopen ("C:\\Users\\olyng\\Desktop\\CardDeck.txt", "r");        // Open the file with 'read' option.    ''
-        if(fp==NULL){ exit(-1);}
-        char line[500];
-        int t = 0;
-        while (feof(fp)) {
-            fscanf(fp, "%s", line);
-            ++t;
-        }
-        line[t] = "\0";
-        fclose(fp);
-        printf("%s", line);
-//while(head !=NULL){
-        //   pop();
-//}
- */
     FILE *fp;
     char str[MAXCHAR];
     char* filename = "C:\\Users\\olyng\\Desktop\\CardDeck.txt";
@@ -128,6 +83,10 @@ void fillCards()
         t++;
     }
     fclose(fp);
+    donePile[0].suit = 'H';
+    donePile[1].suit = 'C';
+    donePile[2].suit = 'D';
+    donePile[3].suit = 'S';
 }
 
 
@@ -146,7 +105,7 @@ void mixCards()
     }
 
 }
-//WORKS and poops and ze sprms
+
 void layOut(int deckSize, int index, int turnedAmount) {
     int t = 0;
     struct Card *prev;
@@ -185,6 +144,7 @@ void layOut(int deckSize, int index, int turnedAmount) {
     }
     current->prev = prev;
 }
+
 void printLine(int lineIndex) {
     struct Card *current;
     for (int i = 0; i < 7; ++i) {
@@ -230,7 +190,6 @@ struct Card *getListIndex(int lineIndex, int arrayIndex) {
     }
     return result;
 }
-
 
 void printBoard() {
     printf("C1\tC2 \tC3 \tC4 \tC5 \tC6 \tC7 \n\n");
@@ -292,7 +251,7 @@ void printStack() {
         }
     }
 
-    void move(struct Card *moveCard, struct Card *moveTo) {
+void move(struct Card *moveCard, struct Card *moveTo) {
         if (moveCard->isShown == F || moveTo->next != NULL || moveCard->suit == moveTo->suit) {
             status[0] = 'E';
             status[1] = 'R';
@@ -305,7 +264,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -320,7 +279,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
 
                 }
@@ -336,7 +295,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
 
                 }
@@ -352,7 +311,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
 
                 }
@@ -368,7 +327,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
 
                 }
@@ -384,7 +343,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -399,7 +358,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -414,7 +373,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -429,7 +388,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -444,7 +403,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -459,7 +418,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -474,7 +433,7 @@ void printStack() {
                     if (prev != NULL) {
                         prev->next = NULL;
                     }
-                    moveCard->prev = &moveTo;
+                    moveCard->prev = moveTo;
                     moveTo->next = moveCard;
                 }
                 else {
@@ -529,10 +488,6 @@ void takeCommand() {
         moveCommand();
     } else if (strlen(getCommand) == 9 && getCommand[7] == 'F' && getCommand[0] == 'C') {
         moveToF();
-    }
-    else {
-        status[0] = 'E';
-        status[1] = 'R';
         return;
     }
 }
@@ -574,54 +529,119 @@ void moveCommand() {
                 status[1] = 'R';
                 return;
         }
-        switch (getCommand[8]) {
-            case '1':
-                toColumn = &columns[0];
-                break;
-            case '2':
-                toColumn = &columns[1];
-                break;
-            case '3':
-                toColumn = &columns[2];
-                break;
-            case '4':
-                toColumn = &columns[3];
-                break;
-            case '5':
-                toColumn = &columns[4];
-                break;
-            case '6':
-                toColumn = &columns[5];
-                break;
-            case '7':
-                toColumn = &columns[6];
-                break;
-            default:
-                status[0] = 'E';
-                status[1] = 'R';
-                return;
-        }
-        moveCard = fromColumn->ptr;
-        while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
-            moveCard = moveCard->next;
-            if (moveCard == NULL) {
-                status[0] = 'E';
-                status[1] = 'R';
-                return;
+        if (getCommand[7] == 'C') {
+            switch (getCommand[8]) {
+                case '1':
+                    toColumn = &columns[0];
+                    break;
+                case '2':
+                    toColumn = &columns[1];
+                    break;
+                case '3':
+                    toColumn = &columns[2];
+                    break;
+                case '4':
+                    toColumn = &columns[3];
+                    break;
+                case '5':
+                    toColumn = &columns[4];
+                    break;
+                case '6':
+                    toColumn = &columns[5];
+                    break;
+                case '7':
+                    toColumn = &columns[6];
+                    break;
+                default:
+                    status[0] = 'E';
+                    status[1] = 'R';
+                    return;
             }
+            moveCard = fromColumn->ptr;
+            while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
+                moveCard = moveCard->next;
+                if (moveCard == NULL) {
+                    status[0] = 'E';
+                    status[1] = 'R';
+                    return;
+                }
+            }
+            moveTo = toColumn->ptr;
+            while (moveTo->next != NULL) {
+                moveTo = moveTo->next;
+            }
+            move(moveCard, moveTo);
+            return;
         }
-        moveTo = toColumn->ptr;
-        while (moveTo->next != NULL) {
-            moveTo = moveTo->next;
-        }
-        move(moveCard, moveTo);
-        return;
     }
 }
 
 void moveToF() {
-
-}
+    if (getCommand[2] != ':' || getCommand[5] != '-' || getCommand[6] != '>') {
+        status[0] = 'E';
+        status[1] = 'R';
+        return;
+    } else {
+        struct Bottom *fromColumn;
+        struct Card *moveCard;
+        struct FinishedPile *toPile;
+            switch (getCommand[1]) {
+                case '1':
+                    fromColumn = &columns[0];
+                    break;
+                case '2':
+                    fromColumn = &columns[1];
+                    break;
+                case '3':
+                    fromColumn = &columns[2];
+                    break;
+                case '4':
+                    fromColumn = &columns[3];
+                    break;
+                case '5':
+                    fromColumn = &columns[4];
+                    break;
+                case '6':
+                    fromColumn = &columns[5];
+                    break;
+                case '7':
+                    fromColumn = &columns[6];
+                    break;
+                default:
+                    status[0] = 'E';
+                    status[1] = 'R';
+                    return;
+            }
+            switch (getCommand[8]) {
+                case '1':
+                    toPile = &donePile[0];
+                    break;
+                case '2':
+                    toPile = &donePile[1];
+                    break;
+                case '3':
+                    toPile = &donePile[2];
+                    break;
+                case '4':
+                    toPile = &donePile[3];
+                    break;
+                default:
+                    status[0] = 'E';
+                    status[1] = 'R';
+                    return;
+            }
+            moveCard = fromColumn->ptr;
+            while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
+                moveCard = moveCard->next;
+                if (moveCard == NULL) {
+                    status[0] = 'E';
+                    status[1] = 'R';
+                    return;
+                }
+            }
+            confirmToF(moveCard, toPile);
+        }
+    }
 
 void printFoundation(int index) {
     if (donePile[index].ptr == NULL) {
@@ -629,10 +649,216 @@ void printFoundation(int index) {
     }
     else {
         struct Card *current;
-        current = donePile->ptr;
+        current = donePile[index].ptr;
         while (current->next != NULL) {
             current = current->next; 
         }
-        printf("%c%c", current->value, current->suit); 
+        printf("%c%c ", current->value, current->suit);
     }
 }
+
+void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
+    if (toPile->suit != moveCard->suit) {
+        status[0] = 'E';
+        status[1] = '1';
+        return;
+    } else if (moveCard->next != NULL) {
+        status[0] = 'E';
+        status[1] = '2';
+        return;
+    } else {
+        if (toPile->ptr == NULL && moveCard->value == 'A') {
+            if (moveCard->prev != NULL) {
+                struct Card *prev;
+                prev = moveCard->prev;
+                prev->next = NULL;
+                moveCard->prev = NULL;
+            }
+            toPile->ptr = moveCard;
+        } else {
+            struct Card *endOfPile;
+            endOfPile = toPile->ptr;
+            while (endOfPile->next != NULL) {
+                endOfPile = endOfPile->next;
+            }
+            switch (endOfPile->value) {
+                case '2':
+                    if (moveCard->value != '3') {
+                        status[0] = 'E';
+                        status[1] = '3';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '3':
+                    if (moveCard->value != '4') {
+                        status[0] = 'E';
+                        status[1] = '4';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '4':
+                    if (moveCard->value != '5') {
+                        status[0] = 'E';
+                        status[1] = '5';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '5':
+                    if (moveCard->value != '6') {
+                        status[0] = 'E';
+                        status[1] = '6';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '6':
+                    if (moveCard->value != '7') {
+                        status[0] = 'E';
+                        status[1] = '7';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '7':
+                    if (moveCard->value != '8') {
+                        status[0] = 'E';
+                        status[1] = '8';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '8':
+                    if (moveCard->value != '9') {
+                        status[0] = 'E';
+                        status[1] = '9';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case '9':
+                    if (moveCard->value != 'T') {
+                        status[0] = 'E';
+                        status[1] = 'T';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case 'T':
+                    if (moveCard->value != 'J') {
+                        status[0] = 'E';
+                        status[1] = 'J';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case 'J':
+                    if (moveCard->value != 'Q') {
+                        status[0] = 'E';
+                        status[1] = 'Q';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                case 'Q':
+                    if (moveCard->value != 'K') {
+                        status[0] = 'E';
+                        status[1] = 'K';
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                    }
+                    break;
+                default:
+                    status[0] = 'E';
+                    status[1] = 'L';
+                    return;
+            }
+        }
+    }
+    status[0] = 'P';
+    status[1] = 'P';
+    return;
+}
+
+
+
+
