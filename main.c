@@ -16,6 +16,7 @@ void takeCommand();
 void moveCommand();
 void printFoundation(int index);
 
+
 int topCard;
 char lastCommand[9];
 char getCommand[9];
@@ -47,6 +48,11 @@ struct FinishedPile donePile[4];
 void moveToF();
 
 void confirmToF(struct Card *moveCard, struct FinishedPile *toPile);
+
+void moveLast(struct Card *moveCard, struct Card *moveTo, struct Bottom *fromBottom);
+
+void movetoEmpty(struct Card *moveCard, struct Bottom *toColumn);
+
 
 int main()
 {
@@ -85,7 +91,7 @@ void fillCards()
 {
     FILE *fp;
     char str[MAXCHAR];
-    char* filename = "C:\\Users\\andre\\OneDrive\\Skrivebord\\Daus.txt";
+    char* filename = "C:\\Users\\olyng\\Desktop\\CardDeck.txt";
     fp = fopen(filename, "r");
 
     if (fp == NULL){
@@ -272,69 +278,6 @@ void printStack() {
     }
 
 void move(struct Card *moveCard, struct Card *moveTo) {
-    if (moveTo == NULL && moveCard->value == 'K') {
-        struct Bottom *column;
-        struct Card *prev;
-        switch (getCommand[1]) {
-            case '1':
-                column = &columns[0];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-            case '2':
-                column = &columns[1];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-            case '3':
-                column = &columns[2];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-            case '4':
-                column = &columns[3];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-            case '5':
-                column = &columns[4];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-            case '6':
-                column = &columns[5];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-            case '7':
-                column = &columns[6];
-                prev = moveCard->prev;
-                if (prev != NULL) {
-                    prev->next = NULL;
-                }
-                column->ptr = moveCard;
-                return;
-
-        }
-    }
         if (moveCard->isShown == F || moveTo->next != NULL || moveCard->suit == moveTo->suit || moveTo == NULL) {
             status[0] = 'E';
             status[1] = 'R';
@@ -722,9 +665,22 @@ void moveCommand() {
                     return;
                 }
             }
+            if (toColumn->ptr == NULL) {
+                if (moveCard->value != 'K') {
+                    status[0] = 'E';
+                    status[1] = 'R';
+                    return;
+                }
+                movetoEmpty(moveCard, toColumn);
+                return;
+            }
             moveTo = toColumn->ptr;
             while (moveTo->next != NULL) {
                 moveTo = moveTo->next;
+            }
+            if (fromColumn->ptr->next == NULL) {
+                moveLast(moveCard, moveTo, fromColumn);
+                return;
             }
             move(moveCard, moveTo);
             return;
@@ -1052,4 +1008,18 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
             }
         }
     }
+}
+
+void moveLast(struct Card *moveCard, struct Card *moveTo, struct Bottom *fromBottom) {
+    fromBottom->ptr = NULL;
+    moveCard->prev = moveTo;
+    moveTo->next = moveCard;
+}
+
+void movetoEmpty(struct Card *moveCard, struct Bottom *toColumn) {
+    toColumn->ptr = moveCard;
+    struct Card* prev;
+    prev = moveCard->prev;
+    prev->next = NULL;
+    moveCard->prev = NULL;
 }
