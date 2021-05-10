@@ -83,7 +83,7 @@ int main()
 
 void fillCards()
 {
-    int t = 0;
+    /*int t = 0;
     char suits[4] = {'H', 'C', 'D', 'S'};
     char values[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
     for (int i = 0; i < 4; ++i) {
@@ -110,7 +110,26 @@ void fillCards()
         //   pop();
 //}
  */
+    FILE *fp;
+    char str[MAXCHAR];
+    char* filename = "C:\\Users\\olyng\\Desktop\\CardDeck.txt";
+    fp = fopen(filename, "r");
+
+    if (fp == NULL){
+        printf("Could not open file %s",filename);
+    }
+    int t = 0;
+    int i = 0;
+    while (fgets(str, MAXCHAR, fp) != NULL) {
+        cards[t].value = str[i];
+        ++i;
+        cards[t].suit = str[i];
+        i = 0;
+        t++;
+    }
+    fclose(fp);
 }
+
 
 void mixCards()
 {   int j, n;
