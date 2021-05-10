@@ -91,7 +91,7 @@ void fillCards()
 {
     FILE *fp;
     char str[MAXCHAR];
-    char* filename = "C:\\Users\\olyng\\Desktop\\CardDeck.txt";
+    char* filename = "C:\\Users\\andre\\OneDrive\\Skrivebord\\daus.txt";
     fp = fopen(filename, "r");
 
     if (fp == NULL){
@@ -551,6 +551,7 @@ void takeCommand() {
     if (getCommand[0] == 'L' && getCommand[1] == 'D') {
         status[0] = 'O';
         status[1] = 'K';
+        clear();
         fillCards();
         layOut(8, 0, 8);
         layOut(8, 1, 8);
@@ -563,7 +564,7 @@ void takeCommand() {
     } else if (getCommand[0] == 'S' && getCommand[1] == 'W') {
         status[0] = 'O';
         status[1] = 'K';
-        fillCards();
+        clear();
         layOut(8, 0, 0);
         layOut(8, 1, 0);
         layOut(8, 2, 0);
@@ -571,6 +572,7 @@ void takeCommand() {
         layOut(7, 4, 0);
         layOut(7, 5, 0);
         layOut(7, 6, 0);
+        topCard = 0;
     } else if (getCommand[0] == 'S' && getCommand[1] == 'I') {
         status[0] = 'O';
         status[1] = 'K';
@@ -581,7 +583,6 @@ void takeCommand() {
     } else if (getCommand[0] == 'S' && getCommand[1] == 'D') {
         status[0] = 'O';
         status[1] = 'K';
-        clear();
     } else if (getCommand[0] == 'Q' && getCommand[1] == 'Q') {
         status[0] = 'O';
         status[1] = 'K';
@@ -589,7 +590,7 @@ void takeCommand() {
     } else if (getCommand[0] == 'P' && strlen(getCommand) == 1) {
         status[0] = 'O';
         status[1] = 'K';
-        fillCards();
+        clear();
         layOut(1, 0, 0);
         layOut(6, 1, 1);
         layOut(7, 2, 2);
@@ -597,9 +598,11 @@ void takeCommand() {
         layOut(9, 4, 4);
         layOut(10, 5, 5);
         layOut(11, 6, 6);
+        topCard = 0;
     } else if (getCommand[0] == 'Q' && strlen(getCommand) == 1) {
         status[0] = 'O';
         status[1] = 'K';
+        clear();
     } else if (strlen(getCommand) == 9 && getCommand[0] == 'C' && getCommand[7] == 'C') {
         moveCommand();
     } else if (strlen(getCommand) == 9 && getCommand[7] == 'F' && getCommand[0] == 'C') {
