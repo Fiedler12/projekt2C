@@ -53,7 +53,6 @@ void moveLast(struct Card *moveCard, struct Card *moveTo, struct Bottom *fromBot
 
 void movetoEmpty(struct Card *moveCard, struct Bottom *toColumn);
 
-
 int main()
 {
     while (1) {
@@ -782,6 +781,9 @@ void clear() {
     for (int i = 0; i < 52; ++i) {
         cards[i].next = NULL;
         cards[i].prev = NULL;
+    }
+    for (int i = 0; i < 4; ++i) {
+        donePile[i].ptr = NULL;
     }
 }
 
