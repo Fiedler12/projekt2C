@@ -58,10 +58,32 @@ int main()
 {
     while (1) {
         printBoard();
+        struct Card *lastF1;
+        struct Card *lastF2;
+        struct Card *lastF3;
+        struct Card *lastF4;
+        lastF1 = donePile[0].ptr;
+        lastF2 = donePile[1].ptr;
+        lastF3 = donePile[2].ptr;
+        lastF4 = donePile[3].ptr;
+        while (lastF1->next != NULL) {
+            lastF1 = lastF1->next;
+        }
+        while (lastF2->next != NULL) {
+            lastF1 = lastF2->next;
+        }
+        while (lastF3->next != NULL) {
+            lastF1 = lastF3->next;
+        }
+        while (lastF4->next != NULL) {
+            lastF1 = lastF4->next;
+        }
+        if (lastF1->value == 'K' && lastF2->value == 'K' && lastF3->value == 'K' && lastF4->value == 'K') {
+            printf("Tillykke! Kabalen gik op!");
+            exit(1);
+        }
     }
 }
-
-
 
 void fillCards()
 {
@@ -88,7 +110,6 @@ void fillCards()
     donePile[2].suit = 'D';
     donePile[3].suit = 'S';
 }
-
 
 void mixCards()
 {   int j, n;
@@ -188,6 +209,9 @@ struct Card *getListIndex(int lineIndex, int arrayIndex) {
             return NULL;
         }
     }
+    if (result->next == NULL && result->isShown == 'F') {
+        result->isShown = 'S';
+    }
     return result;
 }
 
@@ -200,13 +224,13 @@ void printBoard() {
     printLine(2);
     printf("\n");
     printLine(3);
-    printFoundation(2);
+    printFoundation(1);
     printf("F2 (Clubs)");
     printf("\n");
     printLine(4);
     printf("\n");
     printLine(5);
-    printFoundation(3);
+    printFoundation(2);
     printf("F3 (Diamonds)");
     printf("\n");
     printLine(6);
@@ -675,6 +699,9 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                 moveCard->prev = NULL;
             }
             toPile->ptr = moveCard;
+            status[0] = 'P';
+            status[1] = 'P';
+            return;
         } else {
             struct Card *endOfPile;
             endOfPile = toPile->ptr;
@@ -682,10 +709,11 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                 endOfPile = endOfPile->next;
             }
             switch (endOfPile->value) {
-                case '2':
-                    if (moveCard->value != '3') {
+                case 'A':
+                    if (moveCard->value != '2') {
                         status[0] = 'E';
                         status[1] = '3';
+
                         return;
                     } else {
                         if (moveCard->prev != NULL) {
@@ -695,6 +723,27 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
+                    }
+                case '2':
+                    if (moveCard->value != '3') {
+                        status[0] = 'E';
+                        status[1] = '3';
+
+                        return;
+                    } else {
+                        if (moveCard->prev != NULL) {
+                            struct Card *prev;
+                            prev = moveCard->prev;
+                            prev->next = NULL;
+                            moveCard->prev = NULL;
+                        }
+                        endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
                     break;
                 case '3':
@@ -710,8 +759,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case '4':
                     if (moveCard->value != '5') {
                         status[0] = 'E';
@@ -725,8 +776,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case '5':
                     if (moveCard->value != '6') {
                         status[0] = 'E';
@@ -740,8 +793,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case '6':
                     if (moveCard->value != '7') {
                         status[0] = 'E';
@@ -755,8 +810,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
                     }
-                    break;
+                    return;
                 case '7':
                     if (moveCard->value != '8') {
                         status[0] = 'E';
@@ -770,8 +827,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case '8':
                     if (moveCard->value != '9') {
                         status[0] = 'E';
@@ -785,8 +844,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case '9':
                     if (moveCard->value != 'T') {
                         status[0] = 'E';
@@ -800,8 +861,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case 'T':
                     if (moveCard->value != 'J') {
                         status[0] = 'E';
@@ -815,8 +878,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case 'J':
                     if (moveCard->value != 'Q') {
                         status[0] = 'E';
@@ -830,8 +895,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 case 'Q':
                     if (moveCard->value != 'K') {
                         status[0] = 'E';
@@ -845,8 +912,10 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
                             moveCard->prev = NULL;
                         }
                         endOfPile->next = moveCard;
+                        status[0] = 'P';
+                        status[1] = 'P';
+                        return;
                     }
-                    break;
                 default:
                     status[0] = 'E';
                     status[1] = 'L';
@@ -854,11 +923,4 @@ void confirmToF(struct Card *moveCard, struct FinishedPile *toPile) {
             }
         }
     }
-    status[0] = 'P';
-    status[1] = 'P';
-    return;
 }
-
-
-
-
