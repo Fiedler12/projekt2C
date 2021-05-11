@@ -580,8 +580,8 @@ void takeCommand() {
         status[1] = 'K';
         mixCards();
     } else if (getCommand[0] == 'S' && getCommand[1] == 'D') {
-        status[0] = 'O';
-        status[1] = 'K';
+        status[0] = 'N';
+        status[1] = 'O';
     } else if (getCommand[0] == 'Q' && getCommand[1] == 'Q') {
         status[0] = 'O';
         status[1] = 'K';
@@ -647,65 +647,64 @@ void moveCommand() {
                 status[1] = 'R';
                 return;
         }
-        if (getCommand[7] == 'C') {
-            switch (getCommand[8]) {
-                case '1':
-                    toColumn = &columns[0];
-                    break;
-                case '2':
-                    toColumn = &columns[1];
-                    break;
-                case '3':
-                    toColumn = &columns[2];
-                    break;
-                case '4':
-                    toColumn = &columns[3];
-                    break;
-                case '5':
-                    toColumn = &columns[4];
-                    break;
-                case '6':
-                    toColumn = &columns[5];
-                    break;
-                case '7':
-                    toColumn = &columns[6];
-                    break;
-                default:
-                    status[0] = 'E';
-                    status[1] = 'R';
-                    return;
-            }
-            moveCard = fromColumn->ptr;
-            while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
-                moveCard = moveCard->next;
-                if (moveCard == NULL) {
-                    status[0] = 'E';
-                    status[1] = 'R';
-                    return;
-                }
-            }
-            if (toColumn->ptr == NULL) {
-                if (moveCard->value != 'K') {
-                    status[0] = 'E';
-                    status[1] = 'R';
-                    return;
-                }
-                movetoEmpty(moveCard, toColumn);
+        switch (getCommand[8]) {
+            case '1':
+                toColumn = &columns[0];
+                break;
+            case '2':
+                toColumn = &columns[1];
+                break;
+            case '3':
+                toColumn = &columns[2];
+                break;
+            case '4':
+                toColumn = &columns[3];
+                break;
+            case '5':
+                toColumn = &columns[4];
+                break;
+            case '6':
+                toColumn = &columns[5];
+                break;
+            case '7':
+                toColumn = &columns[6];
+                break;
+            default:
+                status[0] = 'E';
+                status[1] = 'R';
+                return;
+        }
+        moveCard = fromColumn->ptr;
+        while (moveCard->value != getCommand[3] || moveCard->suit != getCommand[4]) {
+            moveCard = moveCard->next;
+            if (moveCard == NULL) {
+                status[0] = 'E';
+                status[1] = 'R';
                 return;
             }
-            moveTo = toColumn->ptr;
-            while (moveTo->next != NULL) {
-                moveTo = moveTo->next;
-            }
-            if (fromColumn->ptr->next == NULL) {
-                moveLast(moveCard, moveTo, fromColumn);
+        }
+        if (toColumn->ptr == NULL) {
+            if (moveCard->value != 'K') {
+                status[0] = 'E';
+                status[1] = 'R';
                 return;
             }
-            move(moveCard, moveTo);
+            movetoEmpty(moveCard, toColumn);
             return;
         }
+        moveTo = toColumn->ptr;
+        while (moveTo->next != NULL) {
+            moveTo = moveTo->next;
+        }
+        if (fromColumn->ptr->next == NULL) {
+            moveLast(moveCard, moveTo, fromColumn);
+            return;
+        }
+        move(moveCard, moveTo);
+        return;
     }
 }
+
 
 void moveToF() {
     if (getCommand[2] != ':' || getCommand[5] != '-' || getCommand[6] != '>') {
